@@ -36,5 +36,5 @@ test('applies and normalizes a mounting angle offset', () => {
   const crc = crc16(payload)
   const frame = Buffer.concat([payload, Buffer.from([crc & 0xff, crc >>> 8])])
   const values = parseResponse(frame, 1, 270)
-  assert.ok(Math.abs(values.angleApparent - (270.3 * Math.PI / 180)) < 1e-12)
+  assert.ok(Math.abs(values.angleApparent - (-89.7 * Math.PI / 180)) < 1e-12)
 })

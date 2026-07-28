@@ -28,6 +28,11 @@ function normalizeDegrees(degrees) {
   return ((degrees % 360) + 360) % 360
 }
 
+function signedDegrees(degrees) {
+  const normalized = normalizeDegrees(degrees)
+  return normalized > 180 ? normalized - 360 : normalized
+}
+
 function parseResponse(frame, slaveId = 1, mountingAngleOffset = 0) {
   if (!Buffer.isBuffer(frame) || frame.length !== 13) throw new Error('Invalid Modbus response length')
   if (frame[0] !== slaveId) throw new Error('Unexpected Modbus slave address')
@@ -39,7 +44,7 @@ function parseResponse(frame, slaveId = 1, mountingAngleOffset = 0) {
   if (expectedCrc !== receivedCrc) throw new Error('Invalid Modbus CRC')
 
   const registers = [0, 1, 2, 3].map((index) => frame.readUInt16BE(3 + index * 2))
-  const directionDegrees = normalizeDegrees(registers[3] / 10 + mountingAngleOffset)
+  const directionDegrees = signedDegrees(registers[3] / 10 + mountingAngleOffset)
 
   return {
     speedApparent: registers[0] / 10,
@@ -48,4 +53,4 @@ function parseResponse(frame, slaveId = 1, mountingAngleOffset = 0) {
   }
 }
 
-module.exports = { crc16, buildRequest, normalizeDegrees, parseResponse }
+module.exports = { crc16, buildRequest, normalizeDegrees, signedDegrees, parseResponse }

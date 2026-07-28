@@ -12,7 +12,7 @@ The sensor manual defines the registers as:
 | --- | --- | --- |
 | 0 | `environment.wind.speedApparent` | raw / 10, m/s |
 | 1 | `environment.wind.beaufortScale` | integer |
-| 2 | `environment.wind.angleApparent` | raw / 10 degrees, converted to radians |
+| 2 | `environment.wind.angleApparent` | raw / 10 degrees, corrected to signed vessel-relative angle and converted to radians |
 | 3 | `environment.wind.directionSector` | raw integer value |
 
 ## Configuration
@@ -26,10 +26,11 @@ Configure the plugin in Signal K under Server → Plugin Config. Defaults are:
 - Response timeout: `500 ms`
 - Mounting angle offset: `0°` (positive values rotate the sensor reading clockwise)
 
-The mounting angle offset is applied to the apparent wind angle. Values wrap
-around at north, so the sensor can be mounted in any compass orientation. The
-direction sector is exposed as the raw integer because the sensor documentation
-does not reliably define its interpretation.
+The mounting angle offset is applied to the apparent wind angle. The resulting
+angle follows SignalK’s convention: `0` is ahead, positive values are to
+starboard, negative values are to port, and the result is limited to
+`[-π, +π]` radians. The direction sector is exposed as the raw integer because
+the sensor documentation does not reliably define its interpretation.
 
 The USB serial device must be passed through to a Docker-based Signal K server.
 
