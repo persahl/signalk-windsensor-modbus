@@ -44,7 +44,7 @@ module.exports = function windSensorPlugin(app) {
           minimum: -360,
           maximum: 360,
           default: DEFAULTS.mountingAngleOffset,
-          title: 'Mounting angle offset (degrees clockwise)'
+          title: 'Mounting angle offset (positive values rotate sensor readings clockwise in degrees)'
         }
       }
     }),
