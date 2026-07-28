@@ -39,13 +39,13 @@ function parseResponse(frame, slaveId = 1, mountingAngleOffset = 0) {
   if (expectedCrc !== receivedCrc) throw new Error('Invalid Modbus CRC')
 
   const registers = [0, 1, 2, 3].map((index) => frame.readUInt16BE(3 + index * 2))
-  const directionDegrees = normalizeDegrees(registers[2] / 10 + mountingAngleOffset)
+  const directionDegrees = normalizeDegrees(registers[3] / 10 + mountingAngleOffset)
 
   return {
     speedApparent: registers[0] / 10,
     beaufortScale: registers[1],
     angleApparent: directionDegrees * Math.PI / 180,
-    directionSector: registers[3]
+    directionSector: registers[2]
   }
 }
 
