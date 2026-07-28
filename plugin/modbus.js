@@ -30,7 +30,8 @@ function normalizeDegrees(degrees) {
 
 function signedDegrees(degrees) {
   const normalized = normalizeDegrees(degrees)
-  return normalized > 180 ? normalized - 360 : normalized
+  const signed = normalized > 180 ? normalized - 360 : normalized
+  return -signed
 }
 
 function parseResponse(frame, slaveId = 1, mountingAngleOffset = 0) {
