@@ -44,8 +44,7 @@ function parseResponse(frame, slaveId = 1, mountingAngleOffset = 0) {
   return {
     speedApparent: registers[0] / 10,
     beaufortScale: registers[1],
-    angleApparent: directionDegrees * Math.PI / 180,
-    directionSector: registers[2]
+    angleApparent: directionDegrees * Math.PI / 180
   }
 }
 

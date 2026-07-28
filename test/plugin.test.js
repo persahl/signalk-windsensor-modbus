@@ -59,8 +59,7 @@ test('starts polling, publishes four values, and closes cleanly', async () => {
   assert.deepEqual(messages[0].updates[0].values.map((entry) => entry.path), [
     'environment.wind.speedApparent',
     'environment.wind.angleApparent',
-    'environment.wind.beaufortScale',
-    'environment.wind.directionSector'
+    'environment.wind.beaufortScale'
   ])
   await plugin.stop()
   assert.equal(serial.isOpen, false)

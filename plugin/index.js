@@ -87,12 +87,11 @@ module.exports = function windSensorPlugin(app) {
                 values: [
                   { path: 'environment.wind.speedApparent', value: values.speedApparent },
                   { path: 'environment.wind.angleApparent', value: values.angleApparent },
-                  { path: 'environment.wind.beaufortScale', value: values.beaufortScale },
-                  { path: 'environment.wind.directionSector', value: values.directionSector }
+                  { path: 'environment.wind.beaufortScale', value: values.beaufortScale }
                 ]
               }]
             })
-            log(`Reading: ${values.speedApparent} m/s, ${values.directionSector}`)
+            log(`Reading: ${values.speedApparent} m/s, ${values.angleApparent} rad, Beaufort ${values.beaufortScale}`)
           } catch (err) {
             error(`Invalid wind sensor response: ${err.message}`)
           }
