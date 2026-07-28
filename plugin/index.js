@@ -86,7 +86,7 @@ module.exports = function windSensorPlugin(app) {
                 timestamp,
                 values: [
                   { path: 'environment.wind.speedApparent', value: values.speedApparent },
-                  { path: 'environment.wind.directionTrue', value: values.directionTrue },
+                  { path: 'environment.wind.angleApparent', value: values.angleApparent },
                   { path: 'environment.wind.beaufortScale', value: values.beaufortScale },
                   { path: 'environment.wind.directionSector', value: values.directionSector }
                 ]

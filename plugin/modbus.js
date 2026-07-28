@@ -1,24 +1,5 @@
 'use strict'
 
-const SECTORS = [
-  'North',
-  'North and northeast',
-  'Northeast',
-  'East and northeast',
-  'East',
-  'East and southeast',
-  'Southeast',
-  'South and southeast',
-  'South',
-  'South and southwest',
-  'Southwest',
-  'West and southwest',
-  'West',
-  'West and northwest',
-  'Northwest',
-  'North and northwest'
-]
-
 function crc16(buffer) {
   let crc = 0xffff
   for (const byte of buffer) {
@@ -58,18 +39,14 @@ function parseResponse(frame, slaveId = 1, mountingAngleOffset = 0) {
   if (expectedCrc !== receivedCrc) throw new Error('Invalid Modbus CRC')
 
   const registers = [0, 1, 2, 3].map((index) => frame.readUInt16BE(3 + index * 2))
-  if (registers[3] >= SECTORS.length) throw new Error('Unknown wind direction sector')
-
   const directionDegrees = normalizeDegrees(registers[2] / 10 + mountingAngleOffset)
-  const sectorOffset = Math.round(mountingAngleOffset / 22.5)
-  const directionSector = SECTORS[(registers[3] + sectorOffset % SECTORS.length + SECTORS.length) % SECTORS.length]
 
   return {
     speedApparent: registers[0] / 10,
     beaufortScale: registers[1],
-    directionTrue: directionDegrees * Math.PI / 180,
-    directionSector
+    angleApparent: directionDegrees * Math.PI / 180,
+    directionSector: registers[3]
   }
 }
 
-module.exports = { SECTORS, crc16, buildRequest, normalizeDegrees, parseResponse }
+module.exports = { crc16, buildRequest, normalizeDegrees, parseResponse }

@@ -58,7 +58,7 @@ test('starts polling, publishes four values, and closes cleanly', async () => {
   assert.equal(messages.length, 1)
   assert.deepEqual(messages[0].updates[0].values.map((entry) => entry.path), [
     'environment.wind.speedApparent',
-    'environment.wind.directionTrue',
+    'environment.wind.angleApparent',
     'environment.wind.beaufortScale',
     'environment.wind.directionSector'
   ])
